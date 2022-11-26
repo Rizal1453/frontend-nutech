@@ -21,12 +21,8 @@ function Landing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(2);
 
-  
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCompleted, setFilterCompleted] = useState("");
- 
-
-  
 
   const closelogined = () => setShowLogined(false);
   const closeDelete = () => setShowDelete(false);
@@ -40,16 +36,9 @@ function Landing() {
       console.log(error);
     }
   };
-  //  let { data: product, refetch: yukRefetch } = useQuery(
-  //    "productCache",
-  //    async () => {
-  //      const response = await API.get("/products");
-  //      return response.data.data;
-  //    }
-  //  );
-  // const Header = ["Name", "Age", "Size", "Phone", "Gender"];
-  const indexOfLastPost = currentPage * postsPerPage; // 1 * 3 = 3
-  const indexOfFirstPost = indexOfLastPost - postsPerPage; // 3 -3 = 0
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = data?.slice(indexOfFirstPost, indexOfLastPost);
   const pageNumbers = [];
   const totalPosts = data?.length;
@@ -97,29 +86,7 @@ function Landing() {
             />
           </Form.Group>
         </div>
-        <input
-          type="text"
-          className="form-control"
-          id="search"
-          placeholder="Search Title"
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setCurrentPage(1);
-          }}
-        />
-        <select
-          className="form-select"
-          value={filterCompleted}
-          onChange={(e) => {
-            setFilterCompleted(e.target.value);
-            setCurrentPage(1);
-          }}
-        >
-          <option defaultValue=""></option>
-          <option value="true">true</option>
-          <option value="false">false</option>
-        </select>
+  
         <Table className="border border-2 mt-3 " bordered hover responsive>
           <thead style={{ backgroundColor: "#E5E5E5" }}>
             <tr>
@@ -203,12 +170,7 @@ function Landing() {
             </button>
 
             {pageNumbers?.map((number) => (
-              <li
-              // key={number}
-              // className={`page-link ${
-              //   currentPage === number ? " shadow border border-3" : ""
-              // }`}
-              >
+              <li key={number}>
                 <button
                   className={`page-link ${
                     currentPage === number ? " shadow border border-3" : ""
@@ -217,7 +179,6 @@ function Landing() {
                 >
                   {number}
                 </button>
-             
               </li>
             ))}
             <button
@@ -261,16 +222,7 @@ function Landing() {
             <h2> OOps anda belum login</h2>
           </Modal.Body>
         </Modal>
-        {/*    <TablePagination
-          // title="TablePagination"
-          // subTitle="Sub Title"
-          headers={Header}
-          data={data && data}
-          columns="name.age.size.phone.gender"
-          perPageItemCount={10}
-          totalCount={data?.length}
-          arrayOption={[["size", "all", " "]]}
-                    /> */}
+   
       </Container>
     </div>
   );

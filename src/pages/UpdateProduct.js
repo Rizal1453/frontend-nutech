@@ -14,6 +14,7 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
     buy :"",
     sale:"",
     qty:"",
+    image:""
     
 
   });
@@ -24,8 +25,8 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
         name:save.name,
         sale :save.sale,
         buy:save.buy,
-        qty:save.qty
-
+        qty:save.qty,
+        image:save.image
       });
     }
   }, [save]);
@@ -86,6 +87,7 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
                 id="image"
                 name="image"
                 onChange={handleChange}
+                value={form.image}
                 hidden
               />
               <label
