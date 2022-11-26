@@ -1,0 +1,17 @@
+:root,
+#root {
+  margin:  0 !important;
+  padding: 0 !important;
+  background: none;
+  color: white !important;
+  
+}
+
+
+select {
+  background-color: black !important;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
