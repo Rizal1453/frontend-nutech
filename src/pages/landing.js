@@ -19,42 +19,14 @@ function Landing() {
   const [showLogined, setShowLogined] = useState(false);
   const [data, setData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
+  const [postsPerPage] = useState(2);
 
-   const [todos, setTodos] = useState([]);
-   const [searchTerm, setSearchTerm] = useState("");
-   const [filterCompleted, setFilterCompleted] = useState("");
-   const [totalTodos, setTotalTodos] = useState(0);
   
-   const todosData = useMemo(() => {
-     let computedTodos = todos;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterCompleted, setFilterCompleted] = useState("");
+ 
 
-     if (searchTerm) {
-       computedTodos = computedTodos.filter((todo) =>
-         todo.title.toLowerCase().includes(searchTerm.toLowerCase())
-       );
-     }
-
-     if (filterCompleted === "true") {
-       computedTodos = computedTodos.filter(
-         (todo) => filterCompleted === "true" && todo.completed === true
-       );
-     }
-
-     if (filterCompleted === "false") {
-       computedTodos = computedTodos.filter(
-         (todo) => filterCompleted === "false" && todo.completed === false
-       );
-     }
-
-     setTotalTodos(computedTodos.length);
-
-     //Current Page slice
-     return computedTodos.slice(
-       (currentPage - 1) * postsPerPage,
-       (currentPage - 1) * postsPerPage + postsPerPage
-     );
-   }, [todos, currentPage, searchTerm, filterCompleted]);
+  
 
   const closelogined = () => setShowLogined(false);
   const closeDelete = () => setShowDelete(false);
@@ -62,7 +34,7 @@ function Landing() {
 
   const getProduct = async () => {
     try {
-      const response = await API.get("/products");
+      const response = await API.get(`/products`);
       setData(response.data.data);
     } catch (error) {
       console.log(error);
@@ -223,22 +195,19 @@ function Landing() {
         <div className="d-flex justify-content-center mt-3">
           <ul className="text-dark d-flex gap-3 pagination">
             <button
-              onClick={() => {
-                setCurrentPage((prev) =>
-                  prev < pageNumbers.length ? prev + 1 : prev
-                );
-                console.log(currentPage);
-                console.log(pageNumbers.length);
-              }}
+              onClick={() =>
+                setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev))
+              }
             >
-              +
+              prev
             </button>
+
             {pageNumbers?.map((number) => (
               <li
-                // key={number}
-                // className={`page-link ${
-                //   currentPage === number ? " shadow border border-3" : ""
-                // }`}
+              // key={number}
+              // className={`page-link ${
+              //   currentPage === number ? " shadow border border-3" : ""
+              // }`}
               >
                 <button
                   className={`page-link ${
@@ -248,14 +217,19 @@ function Landing() {
                 >
                   {number}
                 </button>
+             
               </li>
             ))}
             <button
-              onClick={() =>
-                setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev))
-              }
+              onClick={() => {
+                setCurrentPage((prev) =>
+                  prev < pageNumbers.length ? prev + 1 : prev
+                );
+                console.log(currentPage);
+                console.log(pageNumbers.length);
+              }}
             >
-              -
+              next
             </button>
           </ul>
         </div>

@@ -21,7 +21,11 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
     if (save) {
       setForm({
         ...form,
-      
+        name:save.name,
+        sale :save.sale,
+        buy:save.buy,
+        qty:save.qty
+
       });
     }
   }, [save]);
@@ -47,13 +51,13 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
       formData.set("image", form.image[0], form.image[0].name);
       console.log(formData);
       await API.patch(`/update/${id}`, formData);
-      navigate("/");
+    
       getProduct();
       handleClose();
-      Success({ message: `Login Success!` });
+      Success({ message: `Edit Success!` });
     } catch (error) {
       console.log(error);
-      Error({ message: `Login Failed!` });
+      Error({ message: `Edit Failed!` });
     }
   };
 
@@ -99,6 +103,7 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
             <Form.Control
               style={{ height: "45px" }}
               type="text"
+              value={form?.sale}
               name="sale"
               onChange={handleChange}
               placeholder={save?.sale}
@@ -110,6 +115,7 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
               style={{ height: "45px" }}
               type="text"
               name="buy"
+              value={form?.buy}
               onChange={handleChange}
               placeholder={save?.buy}
             />
@@ -120,6 +126,7 @@ function UpdateProduct({ show, handleClose, save, setShowUpdate, getProduct }) {
               style={{ height: "45px" }}
               type="text"
               name="qty"
+              value={form?.qty}
               onChange={handleChange}
               placeholder={save?.qty}
             />
