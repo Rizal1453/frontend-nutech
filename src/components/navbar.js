@@ -28,7 +28,7 @@ export default function NavbarComponent() {
             text="Logout"
             size="me-2"
             style={{ height: "35px" }}
-            onClick={logout}
+            onClick={()=>navigate("/")}
           />
         </div>
       </Container>
