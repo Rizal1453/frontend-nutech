@@ -20,26 +20,26 @@ function App() {
     }
   }, [state]);
 
-  const checkUser = async () => {
-    try {
-      const response = await API.get("/check-auth");
-      console.log(response);
+  // const checkUser = async () => {
+  //   try {
+  //     const response = await API.get("/check-auth");
+  //     console.log(response);
 
-      let payload = response.data.data;
-      payload.token = localStorage.token;
+  //     let payload = response.data.data;
+  //     payload.token = localStorage.token;
 
-      dispatch({
-        type: "USER_SUCCESS",
-        payload,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     dispatch({
+  //       type: "USER_SUCCESS",
+  //       payload,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    checkUser();
-  }, []);
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);
 
   return (
     <Router>

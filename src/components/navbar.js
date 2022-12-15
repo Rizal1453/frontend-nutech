@@ -21,7 +21,7 @@ export default function NavbarComponent() {
     <Navbar className="" style={{ height: "8vh" }}>
       <Container>
         <Navbar.Brand href="#">
-          <img src={Logo} alt="" width={100} />
+          <h2 className="c-pink fst-italic">Rizal Pagination</h2>
         </Navbar.Brand>
         <div className="d-flex justify-content-end w-100">
           <Gbutton

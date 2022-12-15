@@ -8,6 +8,7 @@ import { LoginContext } from "../components/LoginContext";
 import Navbar from "../components/navbar";
 import AddProduct from "./AddProduct";
 import UpdateProduct from "./UpdateProduct";
+import Ronaldo from "../components/assets/profil.jpg";
 
 function Landing() {
   const [state, dispatch] = useContext(LoginContext);
@@ -21,21 +22,21 @@ function Landing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(2);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterCompleted, setFilterCompleted] = useState("");
-
   const closelogined = () => setShowLogined(false);
   const closeDelete = () => setShowDelete(false);
   const logined = state.isLogin;
 
   const getProduct = async () => {
     try {
-      const response = await API.get(`/products`);
-      setData(response.data.data);
+      const response = await API.get(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      setData(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+ 
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -74,7 +75,7 @@ function Landing() {
             style={{ height: "35px" }}
             size="me-5"
             onClick={() => {
-              !logined ? setShowLogined(true) : setShowForm(true);
+               setShowForm(true);
             }}
           />
           <Form.Group className="mb-3 w-75 " controlId="formBasicEmail">
@@ -86,77 +87,94 @@ function Landing() {
             />
           </Form.Group>
         </div>
-  
-        <Table className="border border-2 mt-3 " bordered hover responsive>
-          <thead style={{ backgroundColor: "#E5E5E5" }}>
+
+        <Table striped bordered hover>
+          <thead>
             <tr>
               <th>No</th>
-              <th>Foto Barang</th>
-              <th>Nama Barang</th>
-              <th>Harga Jual</th>
-              <th>Harga Beli</th>
-              <th>Stok</th>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Email</th>
               <th>Action</th>
             </tr>
           </thead>
-          <tbody className="shadow bg-light p-0" style={{ height: "50px" }}>
-            {currentPosts
-              ?.filter((i) => {
-                return search.toLowerCase() === ""
-                  ? i
-                  : i.name.toLowerCase().includes(search);
-              })
-
-              .map((item, index, i) => (
-                <tr>
-                  <td className="d-flex justify-content-center h-100 ">
-                    {index + 1}
-                  </td>
-                  <td className="p-0">
-                    <div>
-                      <img
-                        style={{ width: "70px", height: "70px" }}
-                        className="ms-5 my-1"
-                        src={item.image}
-                        alt=""
-                        width="100%"
-                      />
-                    </div>
-                  </td>
-                  <td>
-                    <p>{item.name}</p>
-                  </td>
-                  <td>
-                    <p>{item.sale}</p>
-                  </td>
-                  <td>
-                    <p>{item.buy}</p>
-                  </td>
-                  <td>{item.qty}</td>
-                  <td
-                    className=" d-flex justify-content-center"
-                    style={{ height: "80px" }}
-                  >
-                    <Gbutton
-                      text="Update"
-                      size="me-1"
-                      style={{ width: "100px", height: "40px" }}
-                      onClick={() => {
-                        !logined ? setShowLogined(true) : setShowUpdate(true);
-                        setSave(item);
-                      }}
-                    />
-                    <Gbutton
-                      text="Delete"
-                      style={{ width: "100px", height: "40px" }}
-                      onClick={() => {
-                        !logined ? setShowLogined(true) : setShowDelete(true);
-                        setSave(item);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+          <tbody>
+            {search === "" ? (
+              <>
+                {currentPosts?.map((item, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <img src={Ronaldo} alt="" />
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td
+                      // className=" d-flex justify-content-center"
+                      // style={{ height: "80px" }}
+                      >
+                        <Gbutton
+                          text="Update"
+                          size="me-1"
+                          style={{ width: "100px", height: "40px" }}
+                          onClick={() => {
+                            setShowUpdate(true);
+                            setSave(item);
+                          }}
+                        />
+                        <Gbutton
+                          text="Delete"
+                          style={{ width: "100px", height: "40px" }}
+                          onClick={() => {
+                           
+                           setShowDelete(true);
+                            setSave(item);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </>
+            ) : (
+            <> 
+                {data
+                  ?.filter((i) => {
+                    return search.toLowerCase() === ""
+                      ? i
+                      : i.name.toLowerCase().includes(search);
+                  })
+                  .map((item, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <img src={Ronaldo} alt="" />
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td
+                      // className=" d-flex justify-content-center"
+                      // style={{ height: "80px" }}
+                      >
+                        <Gbutton
+                          text="Update"
+                          size="me-1"
+                          style={{ width: "100px", height: "40px" }}
+                          onClick={() => {
+                           
+                            setShowUpdate(true);
+                            setSave(item);
+                          }}
+                        />
+                        <Gbutton
+                          text="Delete"
+                          style={{ width: "100px", height: "40px" }}
+                          onClick={() => {
+                  
+                               setShowDelete(true);
+                            setSave(item);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </>
+                        )}
           </tbody>
         </Table>
         <div className="d-flex justify-content-center mt-3">
@@ -222,7 +240,6 @@ function Landing() {
             <h2> OOps anda belum login</h2>
           </Modal.Body>
         </Modal>
-   
       </Container>
     </div>
   );
