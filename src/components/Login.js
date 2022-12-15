@@ -60,6 +60,9 @@ export default function Login() {
     <div className="myBG d-flex flex-column align-items-center  ">
       <img src={User} alt="" width="150" height="150" className="mt-5" />
       <h1 className=" my-3">Login</h1>
+      <p>noted</p>
+      <p>email : user1@gmail.com </p>
+      <p>password : 123456 </p>
       <Form className="w-25">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
